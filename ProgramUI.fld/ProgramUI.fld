@@ -1,0 +1,325 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0305
+header_name {.h}
+code_name {.cpp}
+decl {\#include <FL/fl_ask.H>} {
+  comment {necessary for the warnning messages} public global
+}
+
+class MainWindow {open
+} {
+  decl {Fl_Text_Buffer *buff;} {
+    comment {Declaring text buffer in global scope, 
+static in source file only, dont know why, 
+but just work like this.} public local
+  }
+  Function {hide()} {open
+  } {
+    code {mainwindow->hide();} {}
+  }
+  Function {show()} {open
+  } {
+    code {mainwindow->show();} {}
+  }
+  Function {make()} {
+    comment {function that creates the window,
+i put a function to show in the end,
+so i dont need to ask to show in the main file.} open
+  } {
+    Fl_Window mainwindow {
+      label {My Organizer}
+      callback WinQuit_cb open
+      tooltip {App for keeping your life organized.} xywh {287 48 1015 655} type Double align 5 resizable visible
+    } {
+      Fl_Menu_Bar {} {open
+        xywh {0 0 1455 40} labelsize 11 textsize 11
+      } {
+        Submenu {} {
+          label {Manage account} open
+          xywh {0 0 152 42} labelsize 15
+        } {
+          MenuItem {} {
+            label {Create account}
+            callback CreateAcc_cb
+            xywh {0 0 77 42} labelsize 13
+          }
+          MenuItem {} {
+            label Save
+            callback SaveAcc_cb
+            xywh {10 10 77 42} labelsize 13
+          }
+          MenuItem {} {
+            label {Delete Acc}
+            callback CreateAcc_cb
+            xywh {20 20 77 42} labelsize 13
+          }
+        }
+        MenuItem {} {
+          label Help
+          callback Help_cb
+          xywh {0 0 77 42} labelsize 15
+        }
+      }
+      Fl_Tabs {} {open
+        xywh {25 215 965 430} labeltype ENGRAVED_LABEL labelsize 32 align 9 resizable
+      } {
+        Fl_Group {} {
+          label Calendar open
+          xywh {25 255 960 375} labelsize 15 hide
+        } {
+          Fl_Button {} {
+            label {button 1}
+            callback CButton1_cb
+            xywh {105 365 290 115} labelsize 32
+          }
+        }
+        Fl_Group {} {
+          label {To do list} open
+          xywh {25 255 965 375} box BORDER_BOX labelsize 15 align 9
+        } {
+          Fl_Text_Display Display {
+            xywh {55 280 900 255}
+            code0 {buff = new Fl_Text_Buffer;}
+            code1 {Display->buffer(buff);}
+          }
+          Fl_Button {} {
+            label Add
+            callback TDAdd_cb
+            xywh {365 560 140 45} labelsize 20
+          }
+          Fl_Button {} {
+            label Edit
+            callback TDEdit_cb
+            xywh {575 560 140 45} labelsize 20
+          }
+          Fl_Button {} {
+            label Delete
+            callback TDDelete_cb
+            xywh {790 560 140 45} labelsize 20
+          }
+          Fl_Value_Input ToDoNumber {
+            label {ToDo number}
+            xywh {165 571 175 24}
+          }
+        }
+        Fl_Group {} {
+          label Finances open
+          xywh {25 255 965 390} box BORDER_BOX labelsize 15 align 9 hide resizable
+        } {
+          Fl_Button {} {
+            label {button 3}
+            callback FButton3_cb
+            xywh {735 500 215 95} labelsize 32
+          }
+        }
+      }
+    }
+    code {mainwindow->show();} {}
+  }
+}
+
+class CreateAccountWindow {open
+} {
+  decl {Fl_Text_Buffer *buff;} {
+    comment {Declaring text buffer in global scope, 
+static in source file only, dont know why, 
+but just work like this.} public local
+  }
+  Function {hide()} {open
+  } {
+    code {createaccountwindow->hide();} {}
+  }
+  Function {show()} {open
+  } {
+    code {createaccountwindow->show();} {}
+  }
+  Function {make()} {
+    comment {function that creates the window,
+i put a function to show in the end,
+so i dont need to ask to show in the main file.} open
+  } {
+    Fl_Window createaccountwindow {
+      label {Create Account} open
+      tooltip {Enter your data} xywh {314 287 575 470} type Double align 5 resizable visible
+    } {
+      Fl_Text_Display Display {
+        xywh {105 20 365 135} resizable
+        code0 {buff = new Fl_Text_Buffer;}
+        code1 {Display->buffer(buff);}
+      }
+      Fl_Group {} {
+        label {Account details} open
+        xywh {10 175 550 225}
+      } {
+        Fl_Input NameIn {
+          label {Name:}
+          tooltip {Enter your name} xywh {72 195 175 24}
+        }
+        Fl_Input BirthdayIn {
+          label {Birthday:}
+          tooltip {Birthday dd/mm/yyyy} xywh {72 235 175 24}
+        }
+        Fl_Input PasswordIn {
+          label {Password:}
+          tooltip {six caracters} xywh {345 196 175 24}
+        }
+        Fl_Value_Input MoneyIn {
+          label Money
+          xywh {345 236 175 24}
+        }
+        Fl_Value_Input FinanceHorizonIn {
+          label {Finance Horizon}
+          tooltip {How many months you want to save money} xywh {235 276 110 23}
+        }
+        Fl_Group {} {
+          label {Choose the functionalities you want to use} open
+          xywh {70 325 415 75}
+        } {
+          Fl_Check_Button FinancesCB {
+            label Finances
+            user_data 1
+            callback CheckButton_cb
+            xywh {90 345 70 15} down_box DOWN_BOX
+          }
+          Fl_Check_Button ToDoListCB {
+            label {To do List}
+            user_data 2
+            callback CheckButton_cb
+            xywh {215 345 70 15} down_box DOWN_BOX
+          }
+          Fl_Check_Button CalendarCB {
+            label Calendar
+            user_data 3
+            callback CheckButton_cb
+            xywh {345 345 70 15} down_box DOWN_BOX
+          }
+        }
+      }
+      Fl_Return_Button Ok {
+        label Ok
+        callback CAButtonOK_cb
+        xywh {465 415 92 35}
+      }
+    }
+    code {createaccountwindow->show();} {}
+  }
+}
+
+class ToDoWindow {open
+} {
+  decl {Fl_Text_Buffer *buff;} {
+    comment {Declaring text buffer in global scope, 
+static in source file only, dont know why, 
+but just work like this.} public local
+  }
+  Function {hide()} {open
+  } {
+    code {ToDoWindow->hide();} {}
+  }
+  Function {show()} {open
+  } {
+    code {ToDoWindow->show();} {}
+  }
+  Function {make()} {
+    comment {function that creates the window,
+i put a function to show in the end,
+so i dont need to ask to show in the main file.} open
+  } {
+    Fl_Window ToDoWindow {
+      label {To Do Window} open
+      tooltip {Enter your data} xywh {759 269 575 470} type Double align 69 resizable visible
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback TDWButtonOK_cb
+        xywh {465 415 92 35}
+      }
+      Fl_Input Date {
+        label {Date:}
+        tooltip {Date you want the iten to be done} xywh {120 281 120 23}
+      }
+      Fl_Text_Editor Display {
+        xywh {25 20 520 245}
+        code0 {buff = new Fl_Text_Buffer;}
+        code1 {Display->buffer(buff);}
+      }
+      Fl_Check_Button StatusCB {
+        label {Completed?}
+        user_data 4
+        callback CheckButton_cb
+        xywh {105 410 135 20} down_box DOWN_BOX
+      }
+      Fl_Input Name {
+        label {Name:}
+        tooltip {Person in Charge of the To Do} xywh {120 314 120 23}
+      }
+      Fl_Input_Choice Importance {
+        label Importance open
+        xywh {120 352 180 23}
+        code0 {Importance->add("Very Important");}
+        code1 {Importance->add("Important");}
+        code2 {Importance->add("Normal");}
+        code3 {Importance->add("Not Important");}
+      } {}
+      Fl_Input Tag {
+        label Tag
+        tooltip {Tag, only one tag for now} xywh {375 282 120 23}
+      }
+      Fl_Input_Choice Periocity {
+        label Periocity open
+        tooltip {Set the periocit for this To Do} xywh {375 312 180 23}
+        code0 {Periocity->add("Once");}
+        code1 {Periocity->add("Weekly");}
+        code2 {Periocity->add("Montly");}
+        code3 {Periocity->add("Yearly");}
+      } {}
+    }
+    code {ToDoWindow->show();} {}
+  }
+  class PasswordWindow {open
+  } {
+    decl {Fl_Text_Buffer *buff;} {
+      comment {Declaring text buffer in global scope, 
+static in source file only, dont know why, 
+but just work like this.} public local
+    }
+    Function {hide()} {open
+    } {
+      code {PasswordWindow->hide();} {}
+    }
+    Function {show()} {open
+    } {
+      code {PasswordWindow->show();} {}
+    }
+    Function {make()} {
+      comment {function that creates the window,
+i put a function to show in the end,
+so i dont need to ask to show in the main file.} open
+    } {
+      Fl_Window PassordWindow {
+        label {Password Manager} open
+        tooltip {Enter your data} xywh {475 32 455 235} type Double align 69 resizable visible
+      } {
+        Fl_Return_Button Ok {
+          label Ok
+          callback PWButtonOK_cb selected
+          xywh {345 185 92 35}
+        }
+        Fl_Input_Choice NameChoice {
+          label {User Name:} open
+          xywh {150 37 180 23}
+        } {}
+        Fl_Input PasswordInput {
+          label {Password:}
+          tooltip {Tag, only one tag for now} xywh {150 72 120 23}
+        }
+        Fl_Button CreateUserButton {
+          label {Create User}
+          callback CreateAcc_cb
+          xywh {30 190 100 30}
+        }
+      }
+      code {PassordWindow->show();} {}
+    }
+  }
+}
