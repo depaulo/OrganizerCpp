@@ -1,0 +1,2 @@
+command that i used to compile sqlite.c into object code, linux.
+gcc -DSQLITE_THREADSAFE=0 -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1 -DSQLITE_MAX_EXPR_DEPTH=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -shared sqlite3.c -ldl -o sqlite3.o
