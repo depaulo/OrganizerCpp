@@ -121,6 +121,8 @@ switch (choice){
         //appUser.set_finances(CreateAccountWindow.FinancesCB->value());
         //comment
         //comment2
+        //coment3
+        
     }
         break;
     case 2:{
